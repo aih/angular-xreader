@@ -20,9 +20,6 @@ xr.directive("xrReader",['$parse', '$compile', 'readerFactory', function($parse,
             if(attributes.xmlsource){
                 scope.$watch(attributes.xmlsource, function(){
                     var stylesheets = stylesheetsGetter(scope);
-                    if(stylesheets && stylesheets.length>0){
-                        readerFactory.addStylesheets(stylesheets);
-                    }
                     var xmlSource = xmlGetter(scope);
                     var xElement = jQuery.parseXML(xmlSource || readerFactory.constants.loadXML);
                     /**
@@ -37,6 +34,14 @@ xr.directive("xrReader",['$parse', '$compile', 'readerFactory', function($parse,
                     }
                     var divContainer = document.createElement('div');
                     divContainer.appendChild(xElement.firstElementChild);
+                    if(stylesheets && stylesheets.length>0){
+                        var linkElement = document.createElement('link');
+                        linkElement.setAttribute('property','stylesheet');
+                        linkElement.setAttribute('rel','stylesheet');
+                        linkElement.setAttribute('ng-href','{{stylesheet}}');
+                        linkElement.setAttribute('ng-repeat','stylesheet in stylesheets');
+                        divContainer.insertBefore(linkElement, divContainer.firstChild);
+                    }
                     elements.empty().append(divContainer);
                     $compile(divContainer)(scope);
                 });
@@ -50,32 +55,6 @@ xr.factory('readerFactory', function(){
 
     var readers = {};
 
-    /** Adds stylesheets to document.head
-     * Accepts an array of urls for stylesheets
-     */
-    //TODO deal with namespaces so the app does not have stylesheet conflicts
-    var addStylesheets = function(stylesheetsList){
-       var docHead = window.document.head;
-       var currentLinks = docHead.getElementsByTagName('link');
-       var link = document.createElement('link');
-       link.setAttribute('rel','stylesheet');
-
-       angular.forEach(stylesheetsList,function(stylesheet){
-           linkClone = link.cloneNode(true);
-           linkClone.setAttribute('href',stylesheet);
-           //Do not add stylesheet if it is already in the head element
-           var isDuplicate = false;
-           for (var key in currentLinks){ if(currentLinks.hasOwnProperty(key)){ 
-                isDuplicate = ((stylesheet == currentLinks[key].getAttribute('href')) || isDuplicate);
-           }}
-           if(!isDuplicate){
-               try{
-                   document.head.appendChild(linkClone);
-               }catch(e){}
-           }
-       });
-    };
-
     return{
         constants: {
             //TODO allow constant to be overridden in app, using a variable
@@ -83,7 +62,6 @@ xr.factory('readerFactory', function(){
             loadXML : '<div>Load Bill</div>'
         },
         currentElement: {},
-        addStylesheets : addStylesheets,
         scrollToSelector :function(readerId, selector){
                 var selectorElement = jQuery(selector)[0];
                // selectorElement.scrollIntoView();
