@@ -1,6 +1,6 @@
 /**
  * xreader - generic xml reader in angularjs
- * @version v0.1.0
+ * @version v0.1.2
  * @license MIT
  * @author Ari Hershowitz <arihershowitz@gmail.com>
  */
@@ -35,6 +35,20 @@ xr.directive("xrReader",['$parse', '$compile', 'readerFactory', function($parse,
                     var divContainer = document.createElement('div');
                     divContainer.appendChild(xElement.firstElementChild);
                     if(stylesheets && stylesheets.length>0){
+                        /*
+                         Place script element after link to prevent flash of unstlyed content as suggested here:
+                        <blockquote class="quote">
+                        <a href="https://jakearchibald.com/2016/link-in-body/">The future of loading CSS - JakeArchibald.com</a>
+                        <br>
+                        <p>The plan is for each <link rel="stylesheet"> to block rendering of subsequent content while the styl...</p>
+                        <cite>https://jakearchibald.com/2016/link-in-body/</cite>
+                        </blockquote> 
+                        */ 
+                        var scriptElement = document.createElement('script');
+                        scriptElement.type = 'text/javascript';
+                        scriptElement.text = '  ';
+                        divContainer.insertBefore(scriptElement, divContainer.firstChild);
+
                         var linkElement = document.createElement('link');
                         linkElement.setAttribute('property','stylesheet');
                         linkElement.setAttribute('rel','stylesheet');
