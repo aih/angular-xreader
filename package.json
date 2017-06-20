@@ -1,0 +1,24 @@
+{
+  "name": "angular-xreader",
+  "version": "1.0.0",
+  "description": "Angular directive to display XML",
+  "main": "xreader.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aih/angular-xreader.git"
+  },
+  "keywords": [
+    "Angular",
+    "XML",
+    "display"
+  ],
+  "author": "Ari Hershowitz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aih/angular-xreader/issues"
+  },
+  "homepage": "https://github.com/aih/angular-xreader#readme"
+}
