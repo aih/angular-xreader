@@ -59,7 +59,7 @@ xr.factory('readerFactory', function(){
         constants: {
             //TODO allow constant to be overridden in app, using a variable
             //xrconstants
-            loadXML : '<div>Load Bill</div>'
+            loadXML : '<div>Loading Bill</div>'
         },
         currentElement: {},
         scrollToSelector :function(readerId, selector){

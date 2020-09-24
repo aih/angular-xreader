@@ -1,8 +1,9 @@
 {
-  "name": "angular-xreader",
-  "version": "1.0.0",
+  "name": "@aih/angular-xreader",
+  "version": "1.0.1",
   "description": "Angular directive to display XML",
   "main": "xreader.js",
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "scripts": {
     "test": "test"
   },
