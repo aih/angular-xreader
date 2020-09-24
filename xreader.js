@@ -1,6 +1,6 @@
 /**
  * xreader - generic xml reader in angularjs
- * @version v0.1.0
+ * @version v1.0.2
  * @license MIT
  * @author Ari Hershowitz <arihershowitz@gmail.com>
  */
